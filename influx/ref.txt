@@ -1,0 +1,18 @@
+Referências:
+
+
+Docker Influx Config:
+
+https://hub.docker.com/_/influxdb
+
+https://docs.influxdata.com/influxdb/v2.0/upgrade/v1-to-v2/docker/#influxdb-2x-initialization-credentials
+
+https://blog.anoff.io/2020-12-run-influx-on-raspi-docker-compose/
+
+http://man.hubwiz.com/docset/Docker.docset/Contents/Resources/Documents/docs.docker.com/samples/library/influxdb.html
+
+https://github.com/InfluxCommunity/InfluxDBv2_Telegraf_Docker
+
+https://docs.influxdata.com/influxdb/v2.4/reference/config-options/
+
+https://www.influxdata.com/blog/running-influxdb-2-0-and-telegraf-using-docker/

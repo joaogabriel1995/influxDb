@@ -1,0 +1,56 @@
+version: '3'
+
+networks:
+  intnet:
+
+services:
+  
+  influxdb:
+    container_name: influxdb
+    image: influxdb:2.3.0-alpine
+    ports:
+      - '8086:8086'
+    networks:
+      - intnet
+    volumes:
+      - ./influx/config/influxdb.config/:/etc/influxdb2
+      - ./influx/data/:/var/lib/influxdb2
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: ${DOCKER_INFLUXDB_INIT_MODE} 
+      DOCKER_INFLUXDB_INIT_USERNAME: ${DOCKER_INFLUXDB_INIT_USERNAME}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${DOCKER_INFLUXDB_INIT_PASSWORD} 
+      DOCKER_INFLUXDB_INIT_ORG: ${DOCKER_INFLUXDB_INIT_ORG} 
+      DOCKER_INFLUXDB_INIT_BUCKET: ${DOCKER_INFLUXDB_INIT_BUCKET}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
+    entrypoint: ["./entrypoint.sh"]
+
+  telegraf:
+    image: telegraf
+    restart: always
+    links:
+      - influxdb
+    environment:
+      DOCKER_INFLUXDB_INIT_ORG: ${DOCKER_INFLUXDB_INIT_ORG} 
+      DOCKER_INFLUXDB_INIT_BUCKET: ${DOCKER_INFLUXDB_INIT_BUCKET}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
+    depends_on:
+      - influxdb
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+    networks:
+      - intnet
+  
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=America/Sao_Paulo
+    ports:
+      - "1880:1880"
+    networks:
+      - intnet
+    volumes:
+      - node-red-data:/data
+
+volumes:
+  node-red-data:
+

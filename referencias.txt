@@ -1,0 +1,4 @@
+https://docs.influxdata.com/platform/getting-started/
+https://docs.influxdata.com/influxdb/v1.7/guides/querying_data/
+https://docs.influxdata.com/influxdb/v2.4/query-data/flux/
+
